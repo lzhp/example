@@ -1,9 +1,5 @@
 Thumbs.db
 .DS_Store
-.idea
-.classpath
-.settings
-.svn
 node_modules/*
 appdata
 appdata/*
@@ -16,3 +12,13 @@ WEB-INF
 /Docker/
 *.dat
 *.log
+/test/unit/coverage/
+# Editor directories and files
+.idea
+.classpath
+.settings
+.sonarlint
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
