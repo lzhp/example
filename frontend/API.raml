@@ -1,0 +1,88 @@
+#%RAML 1.0
+title: declarationForm
+version: 1
+baseUri: http://localhost:8080/{version}
+documentation:
+  - title: 概述
+    content: |
+      一个使用微服务架构开发的针对海关报关、通关业务场景的演示系统。
+      系统特点：
+      - 用户界面Vue+ElementUI
+
+/form:
+  description: 报关单相
+
+  get:
+    description: 报关单查询
+    responses:
+      200:
+        body:
+          application/json:
+            example:
+              [
+                {
+                  "id": "123",
+                  "companyid": "123456789012L",
+                  "freightfee": 123,
+                  "premium": 123,
+                  "otherfee": 123,
+                  "addtime": "2017-11-12"
+                }
+              ]
+  post:
+    description: 提交报关单
+    body:
+      application/x-www-form-urlencoded:
+        properties:
+          companyid:
+          freightfee:
+          premium:
+          otherfee:
+          addtime:
+
+  /{id}:
+    uriParameters:
+      id:
+        type: string
+
+    get:
+      description: 获取报关单信息
+      responses:
+        200:
+          body:
+            application/json:
+              example:
+                  {
+                    "id": "123",
+                    "companyid": "123456789012L",
+                    "freightfee": 123,
+                    "premium": 123,
+                    "otherfee": 123,
+                    "addtime": "2017-11-12"
+                  }
+    put:
+      description: 修改报关单
+      body:
+        application/x-www-form-urlencoded:
+          properties:
+            companyid:
+            freightfee:
+            premium:
+            otherfee:
+    delete:
+      description: 删除报关单
+      
+  /{ID}/audit:
+    description: 人工审核
+
+    post:
+      description: 人工审核
+
+/tax:
+  description: 计税
+
+  get:
+    description: 计税计算
+  post:
+    description: 缴税确认
+
