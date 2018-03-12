@@ -1,0 +1,40 @@
+{
+  // 启用/禁用 JavaScript 验证。
+  "javascript.validate.enable": false,
+  // 当打开文件时，将基于文件内容检测 "editor.tabSize" 和 "editor.insertSpaces"。
+  "editor.detectIndentation": false,
+  "prettier.eslintIntegration": true,
+  "eslint.enable": true, //Enable eslint
+  "eslint.autoFixOnSave": true,
+  "eslint.options": {
+    "extensions": [
+      //List of file extensions to activate eslint
+      ".html",
+      ".js",
+      ".vue",
+      ".jsx"
+    ]
+  },
+  "eslint.validate": [
+    {
+      //list of extensions to validate
+      "language": "html",
+      "autoFix": true
+    },
+    {
+      "language": "vue",
+      "autoFix": true //Autofix any fixable errors when linting
+    },
+    {
+      "language": "javascript",
+      "autoFix": true
+    },
+    {
+      "language": "javascriptreact",
+      "autoFix": true
+    }
+  ],
+  // Run the linter on save (onSave) or on type (onType)
+  "eslint.run": "onSave"
+
+}

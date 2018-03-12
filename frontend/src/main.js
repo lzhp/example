@@ -6,9 +6,16 @@ import router from './router'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 
-Vue.use(ElementUI, { size: 'small' })
+import axios from 'axios'
+axios.defaults.baseURL = 'http://127.0.0.1:8000/'
+axios.defaults.timeout = 30000
+axios.defaults.headers.post['Content-Type'] =
+  'application/x-www-form-urlencoded;charset=UTF-8'
+axios.defaults.withCredentials = true
 
-Vue.config.productionTip = false
+Vue.prototype.$axios = axios
+
+Vue.use(ElementUI, { size: 'small' })
 
 /* eslint-disable no-new */
 new Vue({
