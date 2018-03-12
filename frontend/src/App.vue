@@ -10,6 +10,8 @@
       <router-link to="/redreCheck">redreCheck</router-link>
       <router-link to="/example1">example1</router-link>
       <router-link to="/request">request</router-link>
+      <router-link to="/mock">mock</router-link>
+      <router-link to="/mocknew">mocknew</router-link>
     </p>
     <router-view/>
   </div>

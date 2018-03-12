@@ -8,6 +8,8 @@ import redCheck from '@/views/red/check.vue'
 import redreCheck from '@/views/red/recheck.vue'
 import example1 from '@/views/example/form1.vue'
 import testRequest from '@/views/test-request.vue'
+import mockNew from '@/views/testmock/test-mock.vue'
+import testMock from '@/views/test-mock.vue'
 
 const Home = { template: '<div>home</div>' }
 const Foo = { template: '<div>foo</div>' }
@@ -26,6 +28,8 @@ const routes = [
   { path: '/redreCheck', component: redreCheck },
   { path: '/example1', component: example1 },
   { path: '/request', component: testRequest },
+  { path: '/mock', component: testMock },
+  { path: '/mocknew', component: mockNew },
   { path: '*', component: My404 }
 ]
 

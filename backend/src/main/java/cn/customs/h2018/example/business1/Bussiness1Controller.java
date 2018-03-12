@@ -41,5 +41,35 @@ public class Bussiness1Controller {
 
 		return result;
 	}	
+	
+	@RequestMapping("/t1")
+	public Object test3() {
+
+		List<Bussiness1> result = Lists.newArrayList();
+
+		result.add(new Bussiness1(1, "t1", "body2221"));
+		result.add(new Bussiness1(2, "ttitle2", "body2222"));
+		result.add(new Bussiness1(3, "ttitle3", "body2223"));
+		result.add(new Bussiness1(4, "ttitle4", "body2224"));
+		result.add(new Bussiness1(5, "ttitle5", "body2225"));
+		result.add(new Bussiness1(6, "ttitle6", "body2226"));
+
+		return result;
+	}	
+	
+	@RequestMapping("/t2")
+	public Object test4() {
+
+		List<Bussiness1> result = Lists.newArrayList();
+
+		result.add(new Bussiness1(1, "t2", "body2221"));
+		result.add(new Bussiness1(2, "ttitle2", "body2222"));
+		result.add(new Bussiness1(3, "ttitle3", "body2223"));
+		result.add(new Bussiness1(4, "ttitle4", "body2224"));
+		result.add(new Bussiness1(5, "ttitle5", "body2225"));
+		result.add(new Bussiness1(6, "ttitle6", "body2226"));
+
+		return result;
+	}	
 
 }
