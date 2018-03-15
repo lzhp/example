@@ -1,4 +1,4 @@
-package cn.customs.h2010.example.test;
+package cn.customs.h2018.example.bussiness1;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -7,10 +7,11 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class ApplicationTests {
+public class Bussiness1RepositoryTests {
 
 	@Test
-	public void contextLoads() {
+	public void testGetClass() {
+		//fail("Not yet implemented");
 	}
 
 }
