@@ -55,7 +55,7 @@ var mockData = [
 ]
 
 // axiosMock.onGet('/').reply(200, mockData)
-axiosMock.onGet('/t').reply(200, mockData)
+axiosMock.onGet('/article/t').reply(200, mockData)
 axiosMock.onAny().passThrough()
 
 export default {
@@ -82,12 +82,12 @@ export default {
 
   methods: {
     getData1() {
-      this.$axios.get(`/t`).then(res => {
+      this.$axios.get(`/article/t`).then(res => {
         this.posts = res.data;
       });
     },
     getData2() {
-      this.$axios.get(`/`).then(res => {
+      this.$axios.get(`/article/`).then(res => {
         this.posts = res.data;
       });
     }

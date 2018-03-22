@@ -36,5 +36,5 @@ var mockData = [
 ]
 
 // axiosMock.onGet('/t1').reply(200, mockData)
-axiosMock.onGet('/t2').reply(200, mockData)
+axiosMock.onGet('/article/t2').reply(200, mockData)
 axiosMock.onAny().passThrough()

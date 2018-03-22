@@ -5,14 +5,12 @@ import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-
-
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class Bussiness1ServiceTests {
+public class ArticleRepositoryTests {
 
 	@Test
-	public void test() {
+	public void testGetClass() {
 		//fail("Not yet implemented");
 	}
 

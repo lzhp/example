@@ -4,19 +4,16 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
-import cn.customs.h2018.example.business1.Article;
 
 
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class Bussiness1Tests {
+public class ArticleServiceTests {
 
-  @Test
-  public void toStringTest() {
-    Article myPojo = new Article();
-
-    // fail("Not yet implemented");
-  }
+	@Test
+	public void test() {
+		//fail("Not yet implemented");
+	}
 
 }

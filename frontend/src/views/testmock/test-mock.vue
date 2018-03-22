@@ -42,12 +42,12 @@ export default {
 
   methods: {
     getData1() {
-      this.$axios.get(`/t1`).then(res => {
+      this.$axios.get(`/article/t1`).then(res => {
         this.posts = res.data;
       });
     },
     getData2() {
-      this.$axios.get(`/t2`).then(res => {
+      this.$axios.get(`/article/t2`).then(res => {
         this.posts = res.data;
       });
     }
