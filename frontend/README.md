@@ -89,7 +89,7 @@ static                       资源目录
 
 ```bash
 # 使用研发网的npm仓库镜像
-npm config set registry http://。。。
+npm config set registry https://npm-repo.rd.domain.com:8443/repository/npm-public/
 
 # 更新npm到最新版
 npm install npm@latest -g
@@ -123,7 +123,7 @@ npm install -g raml2html
 # 安装依赖
 npm install
 
-# 进入开发模式，启动前台应用，localhost:3000 。监听vue文件改动自动刷新浏览器
+# 进入开发模式，启动前台应用，localhost:8080 。监听vue文件改动自动刷新浏览器
 npm run dev
 
 # 构建文件到dist目录供发布
