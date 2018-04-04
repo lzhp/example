@@ -3,6 +3,7 @@
 1. JDK 1.8+
 2. maven 3.5 + springboot2 + jpa(mybatis) + junit4 + sonarLint
 3. google guava (依赖包)
+4. 开发工具 Eclipse或IDEA，lombok，sonarLint
 
 spring boot 2
 
@@ -27,11 +28,11 @@ junit4不需要直接引用，直接引用spring-boot-starter-test即可
 guava，版本
 
 ```
-		<dependency>
-			<groupId>com.google.guava</groupId>
-			<artifactId>guava</artifactId>
-			<version>24.0-jre</version>
-		</dependency>
+	<dependency>
+		<groupId>com.google.guava</groupId>
+		<artifactId>guava</artifactId>
+		<version>24.0-jre</version>
+	</dependency>
 ```
 
 # 环境说明
@@ -55,9 +56,54 @@ eclipse或ideal, 研发网地址：[\\file.rd.domain.com\software\develop\IDE\](
 
 # 编码规范
 1. 接口及实现的风格，接口 `Bussiness`，实现 `BussinessImpl`，或者不定义接口，只将实现放在在`Bussiness`中
-2. 日期类型，使用`java8`的`LocalDate LocalDateTime`等进行定义
+2. 日期类型，使用`java8`的`LocalDate LocalDateTime`等进行定义，不允许使用`java.util.Date`类
 3. 公共函数，首选JDK自带，在JDK不能满足要求的情况下，首选google guava库里的各种函数，最后才考虑自行封装公共函数
+4. log统一使用`Slf4j`，在使用lombok的情况下，在类的前面加`@Slf4j`注解，然后在类的函数里直接使用如下方式记录日志。目前只记录如下4种，具体使用场景见描述。底层log实现使用spring boot默认的log back，在资源目录下增加`src/main/resources/logback-spring.xml`配置文件即可。
 
+```
+	log.debug(……);  // 在需要时打开，可以定位应用系统出现问题的位置
+	log.info(……);   // 一般信息，一般记录项目中
+	log.error(……);  // 错误信息，一般性错误，记得记录错误堆栈
+	log.fatal(……);  // 异常情况，系统出现此错误情况下可能已经无法正常工作
+```
+
+5. 错误处理：	
+ 
+   - 在异常时，应附加异常的现场信息，如关键单证编号、传入的参数、当前的环节等等关键信息，以便快速定位问题原因。
+   - 在底层只处理自己应该处理的错误，对于已知的业务异常情况，应该抛出自定义的业务异常，异常应包含错误号、关键业务单证号、简单错误描述等信息，对于有嵌套异常的情况，应该将底层的异常包装上述内容后向上层抛出。底层异常不记录log日志（否则会重复记录log）。
+   - Service层应处理各种异常情况，保证业务调用方能得到足够的异常信息，同时，在Service层应记录详细log信息，在系统上线后能通过service层的log信息排查错误。
+   -  Controller提供统一的异常处理机制，因此一般情况下不需要处理异常。
+   - 【推荐】对外的 http/api 开放接口必须使用“错误码”，进行正常返回；而应用内部推荐异常抛出;跨应用间 RPC 调用优先考虑使用 Result 方式，出错时封 装 exception、“错误码”、“错误简短信息”、“错误详细信息”，调用方判断是否包含错误结构，然后进行正常处理。
+   
+```
+   {
+    "exception": {
+        "code": "CONTRY_ERROR_CODE_001",
+        "bussinessId": "testid",
+        "message": "some error",
+        "detail": "top.h2000.utils.Custo……" （数据量太大，视情况提供）
+        }
+   }
+```
+
+6. 缓存：（todo）
+7. 权限：（todo）
+8. 数据库设计，每个表在业务字段之外，增加如下三个字段
+
+```
+  @Version
+  @Column(name="VERSION")
+  private Long version;  //数据版本号，每次数据更新时，version=version+1
+  
+  //
+  @Column(name = "CREATE_TIME", updatable=false)
+  @CreationTimestamp
+  private LocalDateTime createdTime;  // 数据的创建时间，在第一次insert时取系统时间，后续不再更新
+
+  @Column(name = "LAST_UPDATE_TIME")
+  @UpdateTimestamp
+  private LocalDateTime lastUpdateTime;  //每次更新时取系统时间
+```
 
 # 工作步骤
 1. 拷贝模板目录 spring-template
@@ -68,7 +114,6 @@ eclipse或ideal, 研发网地址：[\\file.rd.domain.com\software\develop\IDE\](
 	<artifactId>demo-boot2</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
-
 	<name>demo-boot2</name>
 	<description>Demo project for Spring Boot</description>
 ```
