@@ -10,23 +10,35 @@ import lombok.Getter;
  */
 @Getter
 public class CustomBussinessRuntimeException extends RuntimeException {
-
   private static final long serialVersionUID = 1007903410962994318L;
+
+  /**
+   * 错误编号
+   */
   private final String errorCode;
 
-  public CustomBussinessRuntimeException(String errorCode, String message) {
+  /**
+   * 业务代码
+   */
+  private final String BussinessId;
+
+  public CustomBussinessRuntimeException(String errorCode, String bussinessId, String message) {
     super(message);
     this.errorCode = errorCode;
+    this.BussinessId = bussinessId;
   }
 
-  public CustomBussinessRuntimeException(String errorCode, Throwable cause) {
+  public CustomBussinessRuntimeException(String errorCode, String bussinessId, Throwable cause) {
     super(cause);
     this.errorCode = errorCode;
+    this.BussinessId = bussinessId;
   }
 
-  public CustomBussinessRuntimeException(String errorCode, String message, Throwable cause) {
+  public CustomBussinessRuntimeException(String errorCode, String bussinessId, String message,
+      Throwable cause) {
     super(message, cause);
     this.errorCode = errorCode;
+    this.BussinessId = bussinessId;
   }
 }
 
