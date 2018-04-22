@@ -1,56 +1,31 @@
 # 主要技术及工具
 
 1. JDK 1.8+
-2. maven 3.5 + springboot2 + jpa(mybatis) + junit4 + sonarLint
+2. maven 3.5 + springboot1.5.* + jpa(mybatis) + junit4 + sonarLint
 3. google guava (依赖包)
-4. 开发工具 Eclipse或IDEA，lombok，sonarLint
+4. 开发工具 Eclipse，lombok
 
-spring boot 2
-
-```
-<parent>
-	<groupId>org.springframework.boot</groupId>
-	<artifactId>spring-boot-starter-parent</artifactId>
-	<version>2.0.0.RELEASE</version>
-	<relativePath /> <!-- lookup parent from repository -->
-</parent>
-```
-	
-junit4不需要直接引用，直接引用spring-boot-starter-test即可
-	
-```
-<dependency>
-	<groupId>org.springframework.boot</groupId>
-	<artifactId>spring-boot-starter-test</artifactId>
-</dependency>
-```
-
-guava，版本
-
-```
-	<dependency>
-		<groupId>com.google.guava</groupId>
-		<artifactId>guava</artifactId>
-		<version>24.0-jre</version>
-	</dependency>
-```
-
-# 环境说明
-eclipse或ideal, 研发网地址：[\\file.rd.domain.com\software\develop\IDE\](file:\\file.rd.domain.com\software\develop\IDE\)
-
-1. 安装 `lombok` 插件(直接双击lombok.jar)
-2. 代码风格 `google java style`，文件eclipse-java-google-style.xml，开发工具安装google代码风格操作如下
+# 环境安装说明
+0. jdk 1.8.151 地址：\\file.rd.domain.com\software\develop\jdk-8u151-windows-x64.exe
+1. eclipse, 研发网地址：[\\file.rd.domain.com\software\develop\IDE\](file:\\file.rd.domain.com\software\develop\IDE\)
+2. 安装 `lombok` 插件(直接双击lombok.jar)，地址：\\file.rd.domain.com\software\develop\IDE\lombok.jar
+3. 代码风格 `google java style`，文件eclipse-java-google-style.xml，开发工具安装google代码风格操作如下
 
    eclipse:  select Java/Code Style/Formatter. Import the settings file by selecting Import
   
    idea: Copy it into your config/codestyles folder in your IntelliJ settings folder. Under Settings -> Editor -> Code Style select the google-styleguide as current code style for the Metanome project.
 
-3. maven，研发网maven仓库地址： [http://maven-repo.rd.domain.com:8081/nexus/](http://maven-repo.rd.domain.com:8081/nexus/)，或者直接拷贝` \\file.rd.domain.com\software\develop\conf\.m2\settings.xml`覆盖当前用户的settings.xml
-4. 空白后端的开发模板
+4. maven，研发网maven仓库地址： [http://maven-repo.rd.domain.com:8081/nexus/](http://maven-repo.rd.domain.com:8081/nexus/)，或者直接拷贝` \\file.rd.domain.com\software\develop\conf\.m2\settings.xml`覆盖当前用户的settings.xml
+
+5. 注释格式，codetemplate.xml，地址：[\\file.rd.domain.com\software\develop\conf](\\file.rd.domain.com\software\develop\conf)
+6. git，参见附录
+7. 本地注册中心，consul，地址：[\\file.rd.domain.com\software\develop\consul\consul.exe](\\file.rd.domain.com\software\develop\consul\consul.exe)，直接执行该目录下的startConsul.bat即可。
+8. 示例工程代码地址:\\file.rd.domain.com\software\develop\example\sample20180422.zip
+
 
 # 注意事项
 1. 代码风格, google java style
-2. 层次关系：controller->service->repository，**不允许** 逆向或跨层调用
+2. 层次关系：controller->service->dao，**不允许** 逆向或跨层调用
 3. 业务逻辑应在service层进行封装，对于写数据库等操作，应在service层 **启用事务**。
 
 
@@ -59,6 +34,7 @@ eclipse或ideal, 研发网地址：[\\file.rd.domain.com\software\develop\IDE\](
 2. 日期类型，使用`java8`的`LocalDate LocalDateTime`等进行定义，不允许使用`java.util.Date`类
 3. 公共函数，首选JDK自带，在JDK不能满足要求的情况下，首选google guava库里的各种函数，最后才考虑自行封装公共函数
 4. log统一使用`Slf4j`，在使用lombok的情况下，在类的前面加`@Slf4j`注解，然后在类的函数里直接使用如下方式记录日志。目前只记录如下4种，具体使用场景见描述。底层log实现使用spring boot默认的log back，在资源目录下增加`src/main/resources/logback-spring.xml`配置文件即可。
+5. 不允许随意引入第三方库
 
 ```
 	log.debug(……);  // 在需要时打开，可以定位应用系统出现问题的位置
@@ -86,8 +62,6 @@ eclipse或ideal, 研发网地址：[\\file.rd.domain.com\software\develop\IDE\](
    }
 ```
 
-6. 缓存：（todo）
-7. 权限：（todo）
 8. 数据库设计，每个表在业务字段之外，增加如下三个字段
 
 ```
@@ -105,19 +79,11 @@ eclipse或ideal, 研发网地址：[\\file.rd.domain.com\software\develop\IDE\](
   private LocalDateTime lastUpdateTime;  //每次更新时取系统时间
 ```
 
+6. 缓存：（todo）
+7. 权限：（todo）
+
 # 工作步骤
-1. 拷贝模板目录 spring-template
-2. 修改pom文件中的 `groupId artifactId name description`等属性 
-
-```
-	<groupId>cn.customs.H2018.example</groupId>
-	<artifactId>demo-boot2</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
-	<packaging>jar</packaging>
-	<name>demo-boot2</name>
-	<description>Demo project for Spring Boot</description>
-```
-
+1. 从git上拣出代码
 3. 将项目导入到开发工具中，可以工作了
 
 # 项目目录结构
@@ -207,6 +173,23 @@ root
                   \---service  
                           BussinessServiceTests.java   业务service类测试
 ```
+
+# 附录：git使用
+gitlab地址: http://10.200.15.118:5002
+建立用户，记住自己的用户名密码
+建议使用研发网的邮件地址，一般是: username@rd.domain.com
+
+在gitlab上登陆后，访问如下地址：http://10.200.15.118:5002/profile/keys
+按照 http://10.200.15.118:5002/help/ssh/README 的指引，建立自己的ssh keys并上传
+
+本地执行如下命令
+$ git config --global user.name "用户名"
+$ git config --global user.email 邮件地址，建议使用研发网的邮件地址，一般是: username@rd.domain.com
+
+转到自己的用户目录：
+一般是 C:\Users\用户名.ssh 目录，将 \\10.200.15.37\software\develop\conf.ssh 目录中的config文件拷贝过来
+
+配置完成，现在可以创建项目并push pull了。
 
 # 附录
 亚马逊军规：

@@ -3,8 +3,8 @@ package cn.customs.h2018.sample.utils;
 import lombok.Getter;
 
 /**
- * 自定义的业务逻辑错误
- * Date: 2018-03-21 14:27:35. 
+ * 自定义的业务逻辑错误 Date: 2018-03-21 14:27:35.
+ * 
  * @author: lizhipeng.
  * @description:
  */
@@ -18,27 +18,33 @@ public class CustomBussinessRuntimeException extends RuntimeException {
   private final String errorCode;
 
   /**
-   * 业务代码
+   * 关键业务单证代码
    */
-  private final String BussinessId;
+  private final String bussinessId;
 
-  public CustomBussinessRuntimeException(String errorCode, String bussinessId, String message) {
+  public CustomBussinessRuntimeException(String message, String errorCode, String bussinessId) {
     super(message);
     this.errorCode = errorCode;
-    this.BussinessId = bussinessId;
+    this.bussinessId = bussinessId;
   }
 
-  public CustomBussinessRuntimeException(String errorCode, String bussinessId, Throwable cause) {
-    super(cause);
-    this.errorCode = errorCode;
-    this.BussinessId = bussinessId;
-  }
-
-  public CustomBussinessRuntimeException(String errorCode, String bussinessId, String message,
+  public CustomBussinessRuntimeException(String message, String errorCode, String bussinessId,
       Throwable cause) {
     super(message, cause);
     this.errorCode = errorCode;
-    this.BussinessId = bussinessId;
+    this.bussinessId = bussinessId;
+  }
+
+  public CustomBussinessRuntimeException(String message, String errorCode) {
+    super(message);
+    this.errorCode = errorCode;
+    this.bussinessId = "";
+  }
+
+  public CustomBussinessRuntimeException(String message, String errorCode, Throwable cause) {
+    super(message, cause);
+    this.errorCode = errorCode;
+    this.bussinessId = "";
   }
 }
 
