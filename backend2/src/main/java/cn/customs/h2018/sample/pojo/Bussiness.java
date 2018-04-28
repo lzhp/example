@@ -35,8 +35,8 @@ public class Bussiness {
   @Column(name = "ID")
   private String id;
 
-
-
+  private String entryId;
+  
   @Version
   @Column(name = "VERSION")
   private Long version;

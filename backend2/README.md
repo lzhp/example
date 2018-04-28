@@ -1,7 +1,7 @@
 # 主要技术及工具
 
 1. JDK 1.8+
-2. maven 3.5 + springboot1.5.* + jpa(mybatis) + junit4 + sonarLint
+2. maven 3.5 + springboot1.5.* + mybatis + junit4 + sonarLint
 3. google guava (依赖包)
 4. 开发工具 Eclipse，lombok
 
@@ -24,13 +24,120 @@
 
 
 # 注意事项
-1. 代码风格, google java style
+1. 代码风格, google java style，统一进行格式化操作
 2. 层次关系：controller->service->dao，**不允许** 逆向或跨层调用
 3. 业务逻辑应在service层进行封装，对于写数据库等操作，应在service层 **启用事务**。
 
 
-# 编码规范
-1. 接口及实现的风格，接口 `Bussiness`，实现 `BussinessImpl`，或者不定义接口，只将实现放在在`Bussiness`中
+# 命名规范
+##	命名方式
+根据代码中标识类型的不同，主要使用下列几种命名方式：
+
+1.	Pascal命名
+标识的每个单词首字母大写；
+示例：BackColor、EntryHead
+2.	Camel命名
+标识的首个单词首字母小写，其余的单词均首字母大写；
+示例：backColor、entryHead
+3.	Upper命名
+标识的每个字母均大写；
+示例：IO、ENTRYHEAD
+4.	Lower命名
+标识的每个字母均小写。
+示例：io、entryhead
+
+##	命名约定
+1. 项目名，统一采用“项目缩写-子模块”方式命名，如“税管中心-风险处置”，项目名为“tmc-risk-disposition”，项目名同时也是spirng.application.name,需要配置到bootstrap.yml文件中
+2. 包名,全部采用小写字母，命名规则如下：统一采用cn.gov.customs.h2018为整个项目的包名前缀，然后是项目缩写和子模块名缩写，如“税管中心-风险处置”的包名：“cn.gov.customs.h2018.tmc.trd”，以下依次是controller、service、pojo、dao等包。
+2.	Class 的命名,Class 的名字采用Pascal方式命名，例如：DataFile或InfoParser。
+3. 数据库表名及字段命名，采用全大写，用下划线分隔的方式命名，如“ENTRY_HEAD”"ENTRY_ID"等
+4. Class 变量的命名，变量的名字采用Camel方式命名，如“userName”、“declPort”等
+3.	方法的命名。方法的命名采用Camel方式，建议采用动宾结构词组，如checkEntry、rejectEms等。
+5.	常量，Static Final 变量的命名。Static Final 变量的名字采用Upper方式命名，并且指出完整含义，例如：MAX_UPLOAD_FILE_SIZE=1024。
+6.	参数的命名。参数的名字和变量的命名规范一致。
+7.	数组的命名。数组应该总是用下面的方式来命名：
+byte[] buffer;
+而不是：
+byte buffer[];
+8.	接口与接口实现的命名。
+接口命名与类命名一致，采用Pascal命名方式，接口的实现类采用接口名+Impl或其他有意义的类名称命名。如接口 `Bussiness`，实现 `BussinessImpl`。
+
+# 前后端接口规范
+1. url统一使用小写字母，多个单词之间采用中划线（-）进行分割，如"http://****.customs.gov.cn/parameter-service/dict/get-name?key=country&code=502"
+2. 如果通过网关调用某服务时，url中域名之后的第一部分为服务名，如1中，"parameter-service"为微服务名。
+2. 前后端调用时，暂只使用post和get两种请求方法
+  - GET：从服务器取出资源（一项或多项）。如：GET "http://****.customs.gov.cn/parameter-service/dict/country" 获取国别代码表
+  - POST：更新服务器端资源或执行需要更新数据的操作。
+2. 后端正常返回情况下，`http_status_code`为200，出错的情况下，返回值不为200，根据情况，返回401（无权限）、500等错误。
+3. 有如下数据，结构如下
+
+```
+@Data
+public class Country {
+  
+  private String code;
+  private String name;
+  
+  private Long version;
+  private LocalDateTime createdTime;
+  private LocalDateTime lastUpdateTime;  
+}
+```
+
+单条数据的返回值：
+
+```
+{
+    "code": "110",
+    "name": "日本",
+    "version": null,
+    "createdTime": null,
+    "lastUpdateTime": null
+}
+```
+
+分页的返回值, *注意排序的返回方式*
+
+```
+{
+    "content": [
+        {
+            "code": "110",
+            "name": "日本",
+            "version": null,
+            "createdTime": null,
+            "lastUpdateTime": null
+        }
+    ],
+    "totalPages": 1,
+    "totalElements": 1,
+    "last": true,
+    "number": 0,
+    "size": 20,
+    "sort": [
+        {
+            "direction": "ASC",
+            "property": "code",
+            "ignoreCase": false,
+            "nullHandling": "NATIVE",
+            "ascending": true,
+            "descending": false
+        },
+        {
+            "direction": "DESC",
+            "property": "name",
+            "ignoreCase": false,
+            "nullHandling": "NATIVE",
+            "ascending": false,
+            "descending": true
+        }
+    ],
+    "first": true,
+    "numberOfElements": 1
+}
+```
+
+# 注意事项
 2. 日期类型，使用`java8`的`LocalDate LocalDateTime`等进行定义，不允许使用`java.util.Date`类
 3. 公共函数，首选JDK自带，在JDK不能满足要求的情况下，首选google guava库里的各种函数，最后才考虑自行封装公共函数
 4. log统一使用`Slf4j`，在使用lombok的情况下，在类的前面加`@Slf4j`注解，然后在类的函数里直接使用如下方式记录日志。目前只记录如下4种，具体使用场景见描述。底层log实现使用spring boot默认的log back，在资源目录下增加`src/main/resources/logback-spring.xml`配置文件即可。
@@ -45,11 +152,12 @@
 
 5. 错误处理：	
  
-   - 在异常时，应附加异常的现场信息，如关键单证编号、传入的参数、当前的环节等等关键信息，以便快速定位问题原因。
-   - 在底层只处理自己应该处理的错误，对于已知的业务异常情况，应该抛出自定义的业务异常，异常应包含错误号、关键业务单证号、简单错误描述等信息，对于有嵌套异常的情况，应该将底层的异常包装上述内容后向上层抛出。底层异常不记录log日志（否则会重复记录log）。
+   - 在异常时，应在原始异常的基础上，附加异常的现场信息，如关键单证编号、传入的上下文及参数等等关键信息，以便后续生产环境快速定位问题原因。
+   - 在底层只处理自己应该处理的错误，对于已知的业务异常情况，应该抛出自定义的业务异常，自定义异常应包含错误号、关键业务单证号、简单错误描述等信息。由于其他异常引发的异常，在补充错误号、关键业务单证号、简单错误描述等信息的基础上，将底层的异常包装后再次抛出。底层异常不记录log日志（否则会重复记录log）。
+   - 在DAO层，产生的异常类型有很多，如无法用细粒度异常进行catch，可使用catch(Exception e)方式，并throw new DaoException(e)，不需要打印日志，因为错误在Service层一定需要捕获并打到日志文件中去，因此底层不需要重复，只将异常包装后抛出即可。
    - Service层应处理各种异常情况，保证业务调用方能得到足够的异常信息，同时，在Service层应记录详细log信息，在系统上线后能通过service层的log信息排查错误。
-   -  Controller提供统一的异常处理机制，因此一般情况下不需要处理异常。
-   - 【推荐】对外的 http/api 开放接口必须使用“错误码”，进行正常返回；而应用内部推荐异常抛出;跨应用间 RPC 调用优先考虑使用 Result 方式，出错时封 装 exception、“错误码”、“错误简短信息”、“错误详细信息”，调用方判断是否包含错误结构，然后进行正常处理。
+   -  Controller因为已经处于顶层，无继续处理异常，因此由框架提供统一的异常处理机制，因此一般情况下不需要处理异常。
+   - 没有权限的异常统一返回 NoPermissionExcepition，并通过message说明具体需要的权限id  
    
 ```
    {
@@ -88,90 +196,51 @@
 
 # 项目目录结构
 
-方法一：
-
 ```
 root
-│  pom.xml
-│  README.md
-├─src
-│  ├─main
-│  │  ├─java
-│  │  │  └─cn.customs.h2018.project
-│  │  │     │  Application.java                根目录
-│  │  │     ├─business1                        业务1目录
-│  │  │     │  │  Bussiness1.java                业务的pojo
-│  │  │     │  │  Bussiness1Controller.java      业务的controller
-│  │  │     │  │  Bussiness1Repository.java      业务的数据库封装
-│  │  │     │  │  Bussiness1Service.java         业务的逻辑接口定义（可选）
-│  │  │     │  │  Bussiness1ServiceImpl.java     业务的逻辑实现
-│  │  │     │  └─config                          业务的自身配置信息
-│  │  │     ├─business2                        业务2目录
-│  │  │     │  │  Bussiness2.java                业务的pojo
-│  │  │     │  │  Bussiness2Controller.java      业务的controller
-│  │  │     │  │  Bussiness2Repository.java      业务的数据库封装
-│  │  │     │  │  Bussiness2Service.java         业务的逻辑封装
-│  │  │     │  └─config                          业务的自身配置信息
-│  │  │     ├─config                            整个应用的配置信息目录
-│  │  │     │      ProjectConfiguration.java     应用的配置信息
-│  │  │     └─utils                            整个应用公用的工具类
-│  │  │           CustomBussinessRuntimeException.java 自定义业务错误
-│  │  └─resources                                 资源目录
-│  │      │  application.yml                        应用的配置，建议使用yaml文件
-│  │      ├─static                                静态资源
-│  │      └─templates                             模板等
-└─ └─test                                         单元测试相关
-      └─java
-          └─cn.customs.h2018.example
-              │  ApplicationTests.java            主程序测试
-              ├─bussiness1                        业务1
-              │      Bussiness1RepositoryTests.java  数据库访问单元测试
-              │      Bussiness1ServiceTests.java     业务逻辑单元测试
-              │      Bussiness1Tests.java            pojo单元测试
-              ├─bussiness2                       业务2
-              │      Bussiness2RepositoryTests.java 
-              │      Bussiness2ServiceTests.java
-              │      Bussiness2Tests.java
-              └─utils                             工具类测试
-                                                           
-```
-
-
-方式二：
-
-```
-root
+|   .gitignore
+|   alaudaci.yml
+|   Dockerfile
 |   pom.xml
-|
 +---src
-|   +---main
-|   |   +---java
-|   |   |   \---cn.customs.h2018.sample
-|   |   |       |   Application.java                  主程序
-|   |   |       |   ApplicationConfig.java            配置
-|   |   |       +---controller                        Controller
-|   |   |       |       BussinessController.java        业务controller 
-|   |   |       +---dao                               Dao数据库访问
-|   |   |       |       BussinessRepository.java        jpa方式访问，其他方式（mybatis）也放这个包内 
-|   |   |       +---pojo                              pojo实体
-|   |   |       |       Bussiness.java                  业务实体定义   
-|   |   |       +---service                           服务
-|   |   |       |       BussinessService.java           业务服务类
-|   |   |       \---utils                             工具类
-|   |   |               CustomBussinessRuntimeException.java  自定义业务错误  
-|   |   \---resources                               资源目录
-|   |       |   application.yml                       配置文件，推荐yaml
-|   |       |   logback-spring.xml                    日志配置文件
-|   |       +---static                                静态资源
-|   |       \---templates                             模板
-\-  \---test                                          测试代码
-       \---java
-           \---cn.customs.h2018.sample
-                  |   TemplateApplicationTests.java    主程序测试相关
-                  +---controller
-                  |       BussinessControllerTests.java业务controller测试
-                  \---service  
-                          BussinessServiceTests.java   业务service类测试
+   \---main
+       +---java
+       |   \---cn.gov.customs.h2018
+       |     |   ApplicationStarter.java
+       |     \---tmc
+       |         \---sample
+       |             +---config
+       |             +---constant
+       |             |       SampleError.java
+       |             +---controller
+       |             |       CountryController.java
+       |             |       EntryController.java
+       |             +---dao
+       |             |       CountryRepo.java
+       |             |       EntryHeadRepository.java
+       |             |       EntryListRepository.java
+       |             +---exception
+       |             |       ValidationException.java
+       |             |
+       |             +---pojo
+       |             |       BaseEntity.java
+       |             |       Country.java
+       |             |       Entry.java
+       |             |       EntryHead.java
+       |             |       EntryList.java
+       |             +---proxy
+       |             +---service
+       |             |   |   EntryService.java
+       |             |   \---impl
+       |             |           CountryServiceImpl.java
+       |             |           EntryServiceImpl.java
+       |             |
+       |             \---util
+       \---resources
+               bootstrap.yml
+               logback.xml
+
+
 ```
 
 # 附录：git使用
