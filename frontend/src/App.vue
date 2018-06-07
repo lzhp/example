@@ -12,6 +12,7 @@
       <router-link to="/request">request</router-link>
       <router-link to="/mock">mock</router-link>
       <router-link to="/mocknew">mocknew</router-link>
+      <router-link to="/table">table</router-link>
     </p>
     <router-view/>
   </div>

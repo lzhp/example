@@ -28,6 +28,11 @@
 2. 层次关系：controller->service->dao，**不允许** 逆向或跨层调用
 3. 业务逻辑应在service层进行封装，对于写数据库等操作，应在service层 **启用事务**。
 
+4. pojo内，通过注解的方式对参数进行约束，如@NotNull等
+5. controller: 简单对参数校验，调用service层实现
+5. service：进行业务逻辑处理，启用事务
+6. dao：进行数据库操作
+
 
 # 命名规范
 ##	命名方式

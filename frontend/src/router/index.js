@@ -10,6 +10,7 @@ import example1 from '@/views/example/form1.vue'
 import testRequest from '@/views/test-request.vue'
 import mockNew from '@/views/testmock/test-mock.vue'
 import testMock from '@/views/test-mock.vue'
+import mytable from '@/views/datatable/table.vue'
 
 const Home = { template: '<div>home</div>' }
 const Foo = { template: '<div>foo</div>' }
@@ -30,6 +31,7 @@ const routes = [
   { path: '/request', component: testRequest },
   { path: '/mock', component: testMock },
   { path: '/mocknew', component: mockNew },
+  { path: '/table', component: mytable },
   { path: '*', component: My404 }
 ]
 
