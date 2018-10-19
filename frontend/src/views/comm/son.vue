@@ -4,7 +4,7 @@
     <p>智力： {{ sonData.wisdom }}</p>
     <p>膜法： {{ sonData.magic }}</p>
     <p>攻击： {{ sonData.attack }}</p>
-    <p>防御：<input v-model="sonData.defense" placeholder=""></input></p>
+    <p>防御：<input v-model="sonData.defense" placeholder=""/></p>
     <button @click="increment('wisdom')">增加智力</button>
     <button @click="increment('magic')">增加膜法</button>
     <button @click="increment('attack')">增加攻击</button>

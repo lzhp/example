@@ -16,7 +16,6 @@ import org.springframework.web.util.UriComponentsBuilder;
 import com.google.common.collect.Lists;
 import lombok.extern.slf4j.Slf4j;
 
-
 @CrossOrigin(origins = "*", allowCredentials = "true", maxAge = 4800)
 @RestController
 @RequestMapping("/article")
@@ -26,6 +25,9 @@ public class ArticleController {
   @Autowired
   private ArticleService articleService;
 
+  /**
+   * 
+   */
   @RequestMapping("/t")
   public Object getData2() {
     log.info("my test");
@@ -76,9 +78,8 @@ public class ArticleController {
   }
 
   @PostMapping("")
-  public ResponseEntity<Article> postArticle(@RequestBody Article article,
-      UriComponentsBuilder builder) {
-    
+  public ResponseEntity<Article> postArticle(@RequestBody Article article, UriComponentsBuilder builder) {
+
     log.debug("in add article");
     Article result = articleService.postArticle(article);
     return new ResponseEntity<>(result, HttpStatus.OK);

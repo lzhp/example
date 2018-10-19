@@ -22,14 +22,14 @@ public class ArticleService {
     return temp.isPresent() ? temp.get() : null;
   }
 
-
   /**
    * 发表文章
-   * @Title: postArticle   .
-   * @Description: 如果文章存在，则更新文章，如果文章不存在，则插入文章   
-   *  
-   * Date: 2018-03-18 01:18:09 
-   * @author lizhipeng 
+   * 
+   * @Title: postArticle .
+   * @Description: 如果文章存在，则更新文章，如果文章不存在，则插入文章
+   * 
+   *               Date: 2018-03-18 01:18:09
+   * @author lizhipeng
    *
    * @param article
    * @return

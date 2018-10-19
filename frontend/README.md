@@ -94,6 +94,12 @@ npm config set registry https://npm-repo.rd.domain.com:8443/repository/npm-publi
 # 更新npm到最新版
 npm install npm@latest -g
 
+# 初始化
+npm install webpack -g
+npm install vue-cli -g
+npm install element-ui -s
+npm install v-charts echarts -S
+
 # 安装 api-designer 到全局
 npm install -g api-designer
 

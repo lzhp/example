@@ -16,3 +16,4 @@ WEB-INF
 /Docker/
 *.dat
 *.log
+/.apt_generated/

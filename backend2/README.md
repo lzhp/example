@@ -1,13 +1,13 @@
-# 主要技术及工具
+﻿# 主要技术及工具
 
 1. JDK 1.8+
-2. maven 3.5 + springboot1.5.* + mybatis + junit4 + sonarLint
+2. maven 3.5 + springboot1.5.11 + mybatis + junit4 + sonarLint
 3. google guava (依赖包)
 4. 开发工具 Eclipse，lombok
 
 # 环境安装说明
 0. jdk 1.8.151 地址：\\file.rd.domain.com\software\develop\jdk-8u151-windows-x64.exe
-1. eclipse, 研发网地址：[\\file.rd.domain.com\software\develop\IDE\](file:\\file.rd.domain.com\software\develop\IDE\)
+1. eclipse、Spring Tools Suit, 研发网地址：[\\file.rd.domain.com\software\develop\IDE\](file:\\file.rd.domain.com\software\develop\IDE\)
 2. 安装 `lombok` 插件(直接双击lombok.jar)，地址：\\file.rd.domain.com\software\develop\IDE\lombok.jar
 3. 代码风格 `google java style`，文件eclipse-java-google-style.xml，开发工具安装google代码风格操作如下
 
@@ -149,8 +149,9 @@ public class Country {
 5. 不允许随意引入第三方库
 
 ```
+	log.trace(……);  // 在需要时打开，可以用于细粒度的定位项目中问题的位置
 	log.debug(……);  // 在需要时打开，可以定位应用系统出现问题的位置
-	log.info(……);   // 一般信息，一般记录项目中
+	log.info(……);   // 一般信息，一般记录项目活动状态，不能每个请求都记录info日志
 	log.error(……);  // 错误信息，一般性错误，记得记录错误堆栈
 	log.fatal(……);  // 异常情况，系统出现此错误情况下可能已经无法正常工作
 ```
@@ -201,6 +202,7 @@ public class Country {
 
 # 项目目录结构
 
+方式一：
 ```
 root
 |   .gitignore
@@ -243,9 +245,46 @@ root
        |             \---util
        \---resources
                bootstrap.yml
-               logback.xml
 
 
+```
+
+方式二：
+
+```
+root
+|   .gitignore
+|   alaudaci.yml
+|   Dockerfile
+|   pom.xml
+|
+\---src
+    +---main
+    |   +---java
+    |   |   \---cn.customs.h2018.examp
+    |   |                   |   Application.java
+    |   |                   +---business1
+    |   |                   |   |   Article.java
+    |   |                   |   |   ArticleController.java
+    |   |                   |   |   ArticleRepository.java
+    |   |                   |   |   ArticleService.java
+    |   |                   +---business2
+    |   |                   +---config
+    |   |                   |       ProjectConfiguration.java
+    |   |                   \---utils
+    |   \---resources
+    |       |   application.yml
+    \---test
+        \---java
+            \---cn.customs.h2018.example
+                            |   ApplicationTests.java
+                            +---bussiness1
+                            |       ArticleControllerTests.java
+                            |       ArticleRepositoryTests.java
+                            |       ArticleServiceTests.java
+                            |       ArticleTests.java
+                            +---bussiness2
+                            \---utils
 ```
 
 # 附录：git使用

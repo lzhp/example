@@ -1,3 +1,4 @@
+# 通用配置
 server:
   port: 7998
   
@@ -17,9 +18,48 @@ spring:
     show-sql: true
   cache:
     caffeine.spec: initialCapacity=50,maximumSize=500,expireAfterWrite=10s
-    
-    
- 
-
 endpoints:
   sensitive: false
+  
+# 第三方插件配置
+mybatis: 
+
+
+# 框架sdk配置
+h2018:
+  framework-core:
+    rest:
+      showStackTrace: true
+      
+test:
+  aaa:
+  
+# 数据源
+database:
+  datasource:
+    db1:
+      url: jdbc:mysql://localhost:3306/young
+      username: root
+      password: root
+      driver-class-name: com.mysql.jdbc.Driver
+      ###################以下为druid增加的配置###########################
+      type: com.alibaba.druid.pool.DruidDataSource
+      # 下面为连接池的补充设置，应用到上面所有数据源中
+      # 初始化大小，最小，最大
+      initialSize: 5
+      minIdle: 5
+      maxActive: 20
+    db2:
+      url: jdbc:mysql://localhost:3306/young
+      username: root
+      password: root
+      driver-class-name: com.mysql.jdbc.Driver
+      ###################以下为druid增加的配置###########################
+      type: com.alibaba.druid.pool.DruidDataSource
+      # 下面为连接池的补充设置，应用到上面所有数据源中
+      # 初始化大小，最小，最大
+      initialSize: 5
+      minIdle: 5
+      maxActive: 20    
+
+# 本项目定义的配置
