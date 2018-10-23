@@ -145,6 +145,19 @@ public class Country {
 }
 ```
 
+## rest的url接口规范
+资源路径 `URI = scheme "/" path [ "?" query ] [ "#" fragment ] `，典型路径：http://app-api-yx.hg.cn/entry-query-service/entries/{entryId}/workflow?step=2000000(查询报关单200000工作流)。
+
+- 分隔符“/”一般用来对资源层级的划分
+- Query参数可以作为Collection类型资源的过滤条件使用 
+- 如果是一个复杂的列表或查询操作的话，我们可以为资源设计一个Collection，因为复杂查询可能会涉及比较多的参数，建议使用Post的方式传入，如
+
+```
+POST /entries/search
+```
+
+- 路径中的id不能含有url处理不了的特殊字符，如"["、"]"、"'"等
+
 # 注意事项
 2. 日期类型，使用`java8`的`LocalDate LocalDateTime`等进行定义，不允许使用`java.util.Date`类
 3. 公共函数，首选JDK自带，在JDK不能满足要求的情况下，首选google guava库里的各种函数，最后才考虑自行封装公共函数
@@ -155,8 +168,9 @@ public class Country {
 	log.trace(……);  // 在需要时打开，可以用于细粒度的定位项目中问题的位置
 	log.debug(……);  // 在需要时打开，可以定位应用系统出现问题的位置
 	log.info(……);   // 一般信息，一般记录项目活动状态，不能每个请求都记录info日志
-	log.error(……);  // 错误信息，一般性错误，记得记录错误堆栈
-	log.fatal(……);  // 异常情况，系统出现此错误情况下可能已经无法正常工作
+	log.warn(……);   // 警告信息，与预期的正常情况不一样，需要引起运维人员注意
+	log.error(……);  // 错误，程序已经无法处理，要记录错误堆栈
+	log.fatal(……);  // 严重异常情况，系统出现此错误情况下可能已经无法正常工作
 ```
 
 5. 错误处理：	
@@ -214,6 +228,7 @@ public class Country {
 # 项目目录结构
 
 方式一：
+
 ```
 root
 |   .gitignore
