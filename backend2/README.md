@@ -148,6 +148,9 @@ public class Country {
 ## rest的url接口规范
 资源路径 `URI = scheme "/" path [ "?" query ] [ "#" fragment ] `，典型路径：http://app-api-yx.hg.cn/entry-query-service/entries/{entryId}/workflow?step=2000000(查询报关单200000工作流)。
 
+
+http://app-api-yx.hg.cn/entry-query-service/entries/{entryId}?field=party,&
+
 - 分隔符“/”一般用来对资源层级的划分
 - Query参数可以作为Collection类型资源的过滤条件使用 
 - 如果是一个复杂的列表或查询操作的话，我们可以为资源设计一个Collection，因为复杂查询可能会涉及比较多的参数，建议使用Post的方式传入，如
@@ -155,6 +158,37 @@ public class Country {
 ```
 POST /entries/search
 ```
+
+
+## 报关单要实现的接口
+
+1. entry-query-service/
+	entries/{entry-id}
+	entries/{entry-id}/entry-heads
+	entries/{entry-id}/entry-lists
+	entries/{entry-id}/entry-...（14个）
+
+扩展支持	
+	get  entries/-/entry-heads/search
+	post entries/-/entry-heads/search
+	get  entries/search
+	post entries/search
+	
+2. h2010-entry-query-service/
+	h2010-entries/{entry-id}
+	h2010-entries/{entry-id}/entry-heads/
+	h2010-entries/{entry-id}/entry-lists/
+	h2010-entries/{entry-id}/entry-...(n个)
+	h2010-entries/{entry-id}/entry-workflow/
+	
+扩展支持
+	h2010-entries/search
+	h2010-entries/search
+	h2010-entries/-/search
+	h2010-entries/{entry-id}/involved
+	
+	
+
 
 - 路径中的id不能含有url处理不了的特殊字符，如"["、"]"、"'"等
 
